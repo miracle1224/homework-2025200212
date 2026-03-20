@@ -1,0 +1,154 @@
+{
+  "model": {
+    "series": [
+      "C1",
+      "C2",
+      "C3",
+      {
+        "series": [
+          "C4",
+          "C5",
+          {
+            "parallel": ["C8", "C10"]
+          },
+          "C9"
+        ]
+      },
+      {
+        "series": [
+          {
+            "parallel": ["C6", "C11"]
+          },
+          "C7"
+        ]
+      },
+      "C12",
+      "C13",
+      "C14",
+      "C15",
+      "C16",
+      "C17",
+      "C18",
+      "C19"
+    ]
+  },
+  "mission_steps": [
+    {
+      "step_name": "Pick",
+      "rbd_structure": {
+        "series": [
+          "C1",
+          "C2",
+          "C3",
+          {
+            "parallel": ["C8", "C10"]
+          },
+          {
+            "series": ["C4", "C5"]
+          },
+          "C9",
+          "C12",
+          "C13",
+          "C14",
+          "C15",
+          "C16",
+          "C17",
+          "C18",
+          "C19"
+        ]
+      }
+    },
+    {
+      "step_name": "Lift",
+      "rbd_structure": {
+        "series": [
+          "C1",
+          "C2",
+          "C3",
+          {
+            "parallel": ["C8", "C10"]
+          },
+          {
+            "series": ["C4", "C5"]
+          },
+          "C9",
+          "C12",
+          "C13",
+          "C14",
+          "C15",
+          "C16",
+          "C17",
+          "C18",
+          "C19"
+        ]
+      }
+    },
+    {
+      "step_name": "TravelLoaded",
+      "rbd_structure": {
+        "series": [
+          "C1",
+          "C2",
+          "C3",
+          {
+            "parallel": ["C6", "C11"]
+          },
+          "C7",
+          "C12",
+          "C13",
+          "C14",
+          "C15",
+          "C16",
+          "C17",
+          "C18",
+          "C19"
+        ]
+      }
+    },
+    {
+      "step_name": "Place",
+      "rbd_structure": {
+        "series": [
+          "C1",
+          "C2",
+          "C3",
+          {
+            "parallel": ["C8", "C10"]
+          },
+          {
+            "series": ["C4", "C5"]
+          },
+          "C9",
+          "C12",
+          "C13",
+          "C14",
+          "C15",
+          "C16",
+          "C17",
+          "C18",
+          "C19"
+        ]
+      }
+    },
+    {
+      "step_name": "ReturnEmpty",
+      "rbd_structure": {
+        "series": [
+          "C1",
+          "C2",
+          "C3",
+          "C6",
+          "C7",
+          "C12",
+          "C13",
+          "C14",
+          "C15",
+          "C16",
+          "C17",
+          "C18",
+          "C19"
+        ]
+      }
+    }
+  ]
+}

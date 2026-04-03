@@ -1,0 +1,175 @@
+{
+  "description": "基于lab1的RBD模型转换为一般网络模型，并升级为可修系统",
+  "network_model": {
+    "type": "general_network",
+    "source": "START",
+    "target": "TASK_DONE",
+    "success_criterion": "source_to_target_connectivity",
+    "nodes": [
+      "START",
+      "PWR_IN",
+      "EMI_OK",
+      "DC_BUS",
+      "CTRL_CORE",
+      "SAFETY_OK",
+      "ACT_GATE",
+      "HOIST_PATH",
+      "TROLLEY_PATH",
+      "BRIDGE_LINK",
+      "MOTION_OK",
+      "LIMIT_OK",
+      "POSITION_OK",
+      "TASK_DONE"
+    ],
+    "edges": [
+      {
+        "id": "E1",
+        "from": "START",
+        "to": "PWR_IN",
+        "component": "C1",
+        "role": "main_power_in"
+      },
+      {
+        "id": "E2",
+        "from": "PWR_IN",
+        "to": "EMI_OK",
+        "component": "C2",
+        "role": "emi_filter"
+      },
+      {
+        "id": "E3",
+        "from": "EMI_OK",
+        "to": "DC_BUS",
+        "component": "C3",
+        "role": "rectifier_a"
+      },
+      {
+        "id": "E4",
+        "from": "EMI_OK",
+        "to": "DC_BUS",
+        "component": "C4",
+        "role": "rectifier_b"
+      },
+      {
+        "id": "E5",
+        "from": "DC_BUS",
+        "to": "CTRL_CORE",
+        "component": "C5",
+        "role": "dc_bus_capacitor"
+      },
+      {
+        "id": "E6",
+        "from": "CTRL_CORE",
+        "to": "SAFETY_OK",
+        "component": "C6",
+        "role": "plc_control"
+      },
+      {
+        "id": "E7",
+        "from": "SAFETY_OK",
+        "to": "ACT_GATE",
+        "component": "C7",
+        "role": "safety_relay"
+      },
+      {
+        "id": "E8",
+        "from": "ACT_GATE",
+        "to": "HOIST_PATH",
+        "component": "C8",
+        "role": "hoist_drive"
+      },
+      {
+        "id": "E9",
+        "from": "HOIST_PATH",
+        "to": "MOTION_OK",
+        "component": "C9",
+        "role": "hoist_motor"
+      },
+      {
+        "id": "E10",
+        "from": "HOIST_PATH",
+        "to": "BRIDGE_LINK",
+        "component": "C10",
+        "role": "hoist_brake"
+      },
+      {
+        "id": "E11",
+        "from": "BRIDGE_LINK",
+        "to": "MOTION_OK",
+        "component": "C11",
+        "role": "rope_drum_path"
+      },
+      {
+        "id": "E12",
+        "from": "ACT_GATE",
+        "to": "TROLLEY_PATH",
+        "component": "C12",
+        "role": "trolley_drive"
+      },
+      {
+        "id": "E13",
+        "from": "TROLLEY_PATH",
+        "to": "MOTION_OK",
+        "component": "C13",
+        "role": "trolley_motor"
+      },
+      {
+        "id": "E14",
+        "from": "TROLLEY_PATH",
+        "to": "BRIDGE_LINK",
+        "component": "C14",
+        "role": "wheel_rail_bridge"
+      },
+      {
+        "id": "E15",
+        "from": "MOTION_OK",
+        "to": "LIMIT_OK",
+        "component": "C15",
+        "role": "upper_limit_a"
+      },
+      {
+        "id": "E16",
+        "from": "MOTION_OK",
+        "to": "LIMIT_OK",
+        "component": "C16",
+        "role": "upper_limit_b"
+      },
+      {
+        "id": "E17",
+        "from": "LIMIT_OK",
+        "to": "POSITION_OK",
+        "component": "C17",
+        "role": "encoder_a"
+      },
+      {
+        "id": "E18",
+        "from": "LIMIT_OK",
+        "to": "POSITION_OK",
+        "component": "C18",
+        "role": "encoder_b"
+      },
+      {
+        "id": "E19",
+        "from": "POSITION_OK",
+        "to": "TASK_DONE",
+        "component": "C19",
+        "role": "gripper_actuation"
+      }
+    ]
+  },
+  "repairable_model": {
+    "metric": "steady_state_availability",
+    "component_repair_field": "mu_per_h",
+    "use_effective_lambda": true,
+    "notes": [
+      "单元件可用度可按 A = mu / (lambda + mu) 计算。",
+      "系统层指标仍应依据 network_model 的成功判据进行组合。",
+      "如采用 MTTR 而非 mu_per_h，应先换算 mu = 1 / MTTR。"
+    ]
+  },
+  "hints": [
+    "network_model 使用边可靠性视角：元件映射到网络边，系统成功事件定义为 source 到 target 连通。",
+    "E10-E11-E14 构成跨支路桥接，避免退化为简单串并联 RBD。",
+    "mission_profile.csv 继续用于计算各元件 duty，再与 components.csv 中的 lambda_per_h、mu_per_h 结合分析。"
+  ]
+}
